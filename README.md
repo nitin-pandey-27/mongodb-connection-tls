@@ -99,3 +99,27 @@ We will be using below REPLCIASET to enable TLS connection.
   
   `cat example-client.key example-client.crt > example-client.pem`
   
+
+# Configure REPLICASET to use TSL 
+
+ Change the configuration file /etc/mongod.conf and perform below changes. Perform these changes on all the files. 
+ 
+ # network interfaces
+ net:
+  port: 27017
+  bindIp: 127.0.0.1,10.132.214.224  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+  tls:
+   mode: requireTLS
+   certificateKeyFile: /opt/mongokeys/mongodb-tls/mongod1.pem
+   CAFile: /opt/mongokeys/mongodb-tls/example-ca-pub.crt
+   
+ 
+ # Change the permission and restart the daemon
+ 
+  `chown -R mongod:mongod /opt/mongokeys/mongodb-tls/`
+  
+   `systemctl restart mongod`
+   
+ # Access the system using Certificate 
+ 
+  `mongo --tls --tlsCAFile example-ca-pub.crt -u "eauth" -p "eauth123" 10.132.214.224:27017 --authenticationDatabase "idxadmin" --tlsCertificateKeyFile example-client.pem`
