@@ -22,8 +22,10 @@ We will be using below REPLCIASET to enable TLS connection.
   
 # Generate the CSR and Private key for all member
  
-  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod1.key -out mongod1.csr`
+  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod1.key -out mongod1.csr` 
+  
   `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod2.key -out mongod2.csr`
+  
   `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod3.key -out mongod3.csr`
    
    For each replica member, we need to generate a CSR and Private Key. 
@@ -34,7 +36,9 @@ We will be using below REPLCIASET to enable TLS connection.
  # Signing CSR using CA Private & Public Key
  
  `openssl x509 -req -in mongod1.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod1.crt`
+ 
  `openssl x509 -req -in mongod2.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod2.crt`
+ 
  `openssl x509 -req -in mongod3.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod3.crt`
   
   Use example-ca.key password.
@@ -43,7 +47,9 @@ We will be using below REPLCIASET to enable TLS connection.
 # Generate PEM file for each host 
 
 `cat mongod1.key mongod1.crt > mongod1.pem`
+
 `cat mongod2.key mongod2.crt > mongod2.pem`
+
 `cat mongod3.key mongod3.crt > mongod3.pem`
  
  Now, copy <node#>.pem & example-ca-pub.crt file to respective replica members. 
