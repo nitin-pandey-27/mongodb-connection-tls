@@ -81,12 +81,12 @@ default_keyfile = example-client.key
 prompt = no
 
 [req_distinguished_name]
-C = IN
-ST = UP
-L = NOIDA
+C = NAME-1
+ST = NAME-2
+L = NAME-3
 O = CLIENT
-OU = DSD-CLIENT
-CN = 10.132.214.224
+OU = NAME-4
+CN = XX.XX.XX.XX
 
 [v3_req]
 keyUsage = keyEncipherment, dataEncipherment
