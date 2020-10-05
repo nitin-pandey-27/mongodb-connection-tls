@@ -123,7 +123,7 @@ DNS.3 = XX.XX.XX.XX
  ##### network interfaces
  net:
   port: 27017
-  bindIp: 127.0.0.1,10.132.214.224  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
+  bindIp: 127.0.0.1,XX.XX.XX.XX  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
   tls:
    mode: requireTLS
    certificateKeyFile: /opt/mongokeys/mongodb-tls/mongod1.pem
@@ -139,4 +139,4 @@ DNS.3 = XX.XX.XX.XX
    
  ## Access the system using Certificate 
  
-  `mongo --tls --tlsCAFile example-ca-pub.crt -u "eauth" -p "eauth123" 10.132.214.224:27017 --authenticationDatabase "idxadmin" --tlsCertificateKeyFile example-client.pem`
+  `mongo --tls --tlsCAFile example-ca-pub.crt -u "username" -p "password" XX.XX.XX.XX:27017 --authenticationDatabase "table-name" --tlsCertificateKeyFile example-client.pem`
