@@ -4,6 +4,12 @@ We will be using below REPLCIASET to enable TLS connection.
 
 ![alt text](https://github.com/nitin-pandey-27/mongodb-connection-tls/blob/main/MONGODB-USING-TLS.png)
 
+<!-- Reference Links
+https://mydbops.wordpress.com/2020/05/02/securing-mongodb-cluster-with-tls-ssl/
+https://www.getfilecloud.com/supportdocs/display/cloud/Configure+MongoDB+Cluster+to+Use+TLS-SSL+with+Cluster+Authentication+and+Mongodb+Authentication+on+Linux
+https://www.getfilecloud.com/supportdocs/display/cloud/Configure+MongoDB+Cluster+to+Use+TLS-SSL+with+Cluster+Authentication+and+Mongodb+Authentication+on+Linux
+-->
+
 
 ## Create Private Certifcate 
 
