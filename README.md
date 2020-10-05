@@ -22,9 +22,9 @@ We will be using below REPLCIASET to enable TLS connection.
   
 # Generate the CSR and Private key for all member
  
-  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod1.key -out mongod1.csr
-   openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod2.key -out mongod2.csr
-   openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod3.key -out mongod3.csr`
+  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod1.key -out mongod1.csr`
+  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod2.key -out mongod2.csr`
+  `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod3.key -out mongod3.csr`
    
    For each replica member, we need to generate a CSR and Private Key. 
    Make sure to provide correct CN name. Use either FQDN or HOST IP Address in CN name. 
@@ -33,18 +33,18 @@ We will be using below REPLCIASET to enable TLS connection.
     
  # Signing CSR using CA Private & Public Key
  
- `openssl x509 -req -in mongod1.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod1.crt
-  openssl x509 -req -in mongod2.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod2.crt
-  openssl x509 -req -in mongod3.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod3.crt`
+ `openssl x509 -req -in mongod1.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod1.crt`
+ `openssl x509 -req -in mongod2.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod2.crt`
+ `openssl x509 -req -in mongod3.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod3.crt`
   
   Use example-ca.key password.
   
   
 # Generate PEM file for each host 
 
-`cat mongod1.key mongod1.crt > mongod1.pem
- cat mongod2.key mongod2.crt > mongod2.pem
- cat mongod3.key mongod3.crt > mongod3.pem`
+`cat mongod1.key mongod1.crt > mongod1.pem`
+`cat mongod2.key mongod2.crt > mongod2.pem`
+`cat mongod3.key mongod3.crt > mongod3.pem`
  
  Now, copy <node#>.pem & example-ca-pub.crt file to respective replica members. 
  
@@ -58,30 +58,27 @@ We will be using below REPLCIASET to enable TLS connection.
 
  Create example.conf file 
  
-  `cat example.conf
-[req]
-distinguished_name = req_distinguished_name
-req_extensions = v3_req
-default_keyfile = example-client.key
-prompt = no
-
-[req_distinguished_name]
-C = IN
-ST = UP
-L = NOIDA
-O = CLIENT
-OU = DSD-CLIENT
-CN = 10.132.214.224
-
-[v3_req]
-keyUsage = keyEncipherment, dataEncipherment
-extendedKeyUsage = serverAuth
-subjectAltName = @alt_names
-
-[alt_names]
-DNS.1 = XXX.XXX.XXX.XXX
-DNS.2 = XXX.XXX.XXX.XXX
-DNS.3 = XXX.XXX.XXX.XXX`
+  `cat example.conf`
+`[req]`
+`distinguished_name = req_distinguished_name`
+`req_extensions = v3_req`
+`default_keyfile = example-client.key`
+`prompt = no`
+`[req_distinguished_name]`
+`C = IN`
+`ST = UP`
+`L = NOIDA`
+`O = CLIENT`
+`OU = DSD-CLIENT`
+`CN = 10.132.214.224`
+`[v3_req]`
+`keyUsage = keyEncipherment, dataEncipherment`
+`extendedKeyUsage = serverAuth`
+`subjectAltName = @alt_names`
+`[alt_names]`
+`DNS.1 = XXX.XXX.XXX.XXX`
+`DNS.2 = XXX.XXX.XXX.XXX`
+`DNS.3 = XXX.XXX.XXX.XXX`
   
 # Generete CSR file and private key from above configuration file. 
 
