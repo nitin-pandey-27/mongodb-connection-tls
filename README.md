@@ -11,7 +11,7 @@ https://www.getfilecloud.com/supportdocs/display/cloud/Configure+MongoDB+Cluster
 -->
 
 
-## Create Private Certifcate 
+## Create CA Private Certifcate 
 
  `openssl genrsa -out example-ca.key -aes256 8192`
    
