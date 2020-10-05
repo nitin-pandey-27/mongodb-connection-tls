@@ -5,14 +5,14 @@ We will be using below REPLCIASET to enable TLS connection.
 ![alt text](https://github.com/nitin-pandey-27/mongodb-connection-tls/blob/main/MONGODB-USING-TLS.png)
 
 
-# Create Private Certifcate 
+## Create Private Certifcate 
 
  `openssl genrsa -out example-ca.key -aes256 8192`
    
   We need to enter a strong password and make sure to take backup of the password or remember the password. 
    
    
-# Sign CA Public Certificate 
+## Sign CA Public Certificate 
   
  `openssl req -x509 -new -extensions v3_ca -key example-ca.key -days 365 -out example-ca-pub.crt`
  
@@ -20,7 +20,7 @@ We will be using below REPLCIASET to enable TLS connection.
   Kindly do provide all the details asked while generating the certiicate 
   
   
-# Generate the CSR and Private key for all member
+## Generate the CSR and Private key for all member
  
   `openssl req -nodes -newkey rsa:4096 -sha256 -keyout mongod1.key -out mongod1.csr` 
   
@@ -33,7 +33,7 @@ We will be using below REPLCIASET to enable TLS connection.
    Please provide the similar information as mentioned for CA Certicate. 
    Kindly do provide all the details asked while generating the certiicate 
     
- # Signing CSR using CA Private & Public Key
+## Signing CSR using CA Private & Public Key
  
  `openssl x509 -req -in mongod1.csr -CA example-ca-pub.crt -CAkey example-ca.key -CAcreateserial -out mongod1.crt`
  
@@ -44,7 +44,7 @@ We will be using below REPLCIASET to enable TLS connection.
   Use example-ca.key password.
   
   
-# Generate PEM file for each host 
+## Generate PEM file for each host 
 
 `cat mongod1.key mongod1.crt > mongod1.pem`
 
@@ -55,7 +55,7 @@ We will be using below REPLCIASET to enable TLS connection.
  Now, copy <node#>.pem & example-ca-pub.crt file to respective replica members. 
  
  
-# Create a configuration file for generating client CSR 
+## Create a configuration file for generating client CSR 
 
 
  Client certificates need to be signed by the same CA who signed all replica member certificate.
@@ -67,7 +67,7 @@ We will be using below REPLCIASET to enable TLS connection.
  `vi cat example.conf`
  
   
- <!---
+ ```
 `[req]`
 `distinguished_name = req_distinguished_name`
 `req_extensions = v3_req`
@@ -88,14 +88,14 @@ We will be using below REPLCIASET to enable TLS connection.
 `DNS.1 = XXX.XXX.XXX.XXX`
 `DNS.2 = XXX.XXX.XXX.XXX`
 `DNS.3 = XXX.XXX.XXX.XXX`
---->
+```
   
-# Generete CSR file and private key from above configuration file. 
+## Generete CSR file and private key from above configuration file. 
 
 `openssl req -new -nodes -out example-client.csr -config example.conf`
   
   
-# Sign the client CSR using CA public and private key
+## Sign the client CSR using CA public and private key
 
  `openssl x509 -req -in example-client.csr -CA example-ca-pub.crt -CAkey example-ca.key -out example-client.crt` 
  
@@ -104,11 +104,12 @@ We will be using below REPLCIASET to enable TLS connection.
   `cat example-client.key example-client.crt > example-client.pem`
   
 
-# Configure REPLICASET to use TSL 
+## Configure REPLICASET to use TSL 
 
  Change the configuration file /etc/mongod.conf and perform below changes. Perform these changes on all the files. 
  
- # network interfaces
+ ```
+ ##### network interfaces
  net:
   port: 27017
   bindIp: 127.0.0.1,10.132.214.224  # Enter 0.0.0.0,:: to bind to all IPv4 and IPv6 addresses or, alternatively, use the net.bindIpAll setting.
@@ -116,14 +117,15 @@ We will be using below REPLCIASET to enable TLS connection.
    mode: requireTLS
    certificateKeyFile: /opt/mongokeys/mongodb-tls/mongod1.pem
    CAFile: /opt/mongokeys/mongodb-tls/example-ca-pub.crt
+ ```
    
  
- # Change the permission and restart the daemon
+ ## Change the permission and restart the daemon
  
   `chown -R mongod:mongod /opt/mongokeys/mongodb-tls/`
   
    `systemctl restart mongod`
    
- # Access the system using Certificate 
+ ## Access the system using Certificate 
  
   `mongo --tls --tlsCAFile example-ca-pub.crt -u "eauth" -p "eauth123" 10.132.214.224:27017 --authenticationDatabase "idxadmin" --tlsCertificateKeyFile example-client.pem`
