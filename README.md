@@ -68,27 +68,32 @@ We will be using below REPLCIASET to enable TLS connection.
  
   
  ```
-`[req]`
-`distinguished_name = req_distinguished_name`
-`req_extensions = v3_req`
-`default_keyfile = example-client.key`
-`prompt = no`
-`[req_distinguished_name]`
-`C = IN`
-`ST = UP`
-`L = NOIDA`
-`O = CLIENT`
-`OU = DSD-CLIENT`
-`CN = 10.132.214.224`
-`[v3_req]`
-`keyUsage = keyEncipherment, dataEncipherment`
-`extendedKeyUsage = serverAuth`
-`subjectAltName = @alt_names`
-`[alt_names]`
-`DNS.1 = XXX.XXX.XXX.XXX`
-`DNS.2 = XXX.XXX.XXX.XXX`
-`DNS.3 = XXX.XXX.XXX.XXX`
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+default_keyfile = example-client.key
+prompt = no
+
+[req_distinguished_name]
+C = IN
+ST = UP
+L = NOIDA
+O = CLIENT
+OU = DSD-CLIENT
+CN = 10.132.214.224
+
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = XX.XX.XX.XX
+DNS.2 = XX.XX.XX.XX
+DNS.3 = XX.XX.XX.XX
 ```
+
+ Provide all the member HOSTNAME / IP ADDRESS in `[alt_names]`
   
 ## Generete CSR file and private key from above configuration file. 
 
