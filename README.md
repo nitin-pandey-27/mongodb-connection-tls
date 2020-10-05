@@ -67,7 +67,7 @@ We will be using below REPLCIASET to enable TLS connection.
  `vi cat example.conf`
  
   
- <!--
+ <!---
 `[req]`
 `distinguished_name = req_distinguished_name`
 `req_extensions = v3_req`
@@ -88,7 +88,7 @@ We will be using below REPLCIASET to enable TLS connection.
 `DNS.1 = XXX.XXX.XXX.XXX`
 `DNS.2 = XXX.XXX.XXX.XXX`
 `DNS.3 = XXX.XXX.XXX.XXX`
--->
+--->
   
 # Generete CSR file and private key from above configuration file. 
 
